@@ -89,3 +89,36 @@ h1, h2, h3, h4, h5 {
 }
 
 
+.sample-page-container{
+  box-shadow: 5px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  border: solid 3px black;
+  border-radius: 20px;
+  padding: 2em;
+  width: 50%;
+  pointer-events: none;
+}
+
+
+.sample-page-container > h3 {
+  margin-top: 1em;
+  margin-bottom: 25px;
+}
+.sample-page-container > input,
+.sample-page-container > button {
+  padding: 10px;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.home-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sample-page-header{
+  margin-bottom: 1em;
+  margin-top: 3em;
+}
