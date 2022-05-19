@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import SamplePage from './SamplePage';
 
 /**
  * COMPONENT
@@ -41,12 +42,16 @@ export const Home = props => {
   if(colors.length === 0)
     return null;
   return (
-    <div>
+    <div className='home-container'>
       <h1>Machine Learning Color Palette</h1>
       <div className='box-container'>
-        <div className={`box ${display}-box box1`} style={{backgroundColor: `rgb(${colors[0].r}, ${colors[0].b}, ${colors[0].g})`}}><button className='copy-button' onClick={() => copyToClipboard(0)}>Copy rgb</button></div>
+        {colors.map((color, idx) => {
+          return <div className={`box ${display}-box box${idx}`} style={{backgroundColor: `rgb(${color.r}, ${color.b}, ${color.g})`}}><button className='copy-button' onClick={() => copyToClipboard(idx)}>Copy rgb</button></div>
+        })}
+
+        {/* <div className={`box ${display}-box box1`} style={{backgroundColor: `rgb(${colors[0].r}, ${colors[0].b}, ${colors[0].g})`}}><button className='copy-button' onClick={() => copyToClipboard(0)}>Copy rgb</button></div>
         <div className={`box ${display}-box box2`} style={{backgroundColor: `rgb(${colors[1].r}, ${colors[1].b}, ${colors[1].g})`}}><button className='copy-button' onClick={() => copyToClipboard(1)}>Copy rgb</button></div>
-        <div className={`box ${display}-box box3`} style={{backgroundColor: `rgb(${colors[2].r}, ${colors[2].b}, ${colors[2].g})`}}><button className='copy-button' onClick={() => copyToClipboard(2)}>Copy rgb</button></div>
+        <div className={`box ${display}-box box3`} style={{backgroundColor: `rgb(${colors[2].r}, ${colors[2].b}, ${colors[2].g})`}}><button className='copy-button' onClick={() => copyToClipboard(2)}>Copy rgb</button></div> */}
       </div>
       <div className='stars-container'>
         <button className={`star ${whatStarsAreGold.star1 ? 'gold' : ''}`} id='star1' onMouseEnter={() => onMouseEnter(1)} onMouseLeave={onMouseLeave} onClick={() => postRating(0)}>★</button>
@@ -61,6 +66,8 @@ export const Home = props => {
         <button onClick={() => setDisplay('design')}>Design</button>
         <button onClick={() => setDisplay('equal')}>Equal</button>
       </div>
+      <h3 className='sample-page-header'>Sample Page</h3>
+      <SamplePage colors={colors}/>
     </div>
   )
 }
