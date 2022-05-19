@@ -19,3 +19,73 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+h1, h2, h3, h4, h5 {
+  text-align: center;
+}
+
+.equal-box{
+  height: 100px;
+  width: 100px;
+}
+
+.star{
+  background-color: transparent;
+  border:none;
+}
+
+.stars-container{
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+.gold{
+  color: gold
+}
+
+.box-container{
+  display: flex;
+  justify-content: center;
+}
+
+.box-container > .design-box:nth-child(1){
+  height: 100px;
+  width: 210px;
+}
+.box-container > .design-box:nth-child(2){
+  height: 100px;
+  width: 60px;
+}
+.box-container > .design-box:nth-child(3){
+  height: 100px;
+  width: 30px;
+}
+
+.display-options-container{
+  display: flex;
+  justify-content: center;
+}
+
+.copy-button{
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: .3;
+}
+
+.box:hover > *{
+  display:block;
+}
+
+.box{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box:hover{
+  background-color: red;
+}
+
+
