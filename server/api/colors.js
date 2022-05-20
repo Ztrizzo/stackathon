@@ -1,7 +1,7 @@
 const router = require('express').Router()
 module.exports = router;
 const brain = require('brain.js');
-const trainingData = [];
+let trainingData = [];
 
 router.get('/', async(req, res, next) => {
   try{
@@ -92,3 +92,13 @@ const getRandomRGB = () => {
     b: Math.round(Math.random() * 255)
   }
 }
+
+router.delete('/', async(req, res, next) => {
+  try{
+    trainingData = [];
+    res.sendStatus(204)
+  }
+  catch(ex){
+    next(ex);
+  }
+})
