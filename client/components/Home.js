@@ -10,6 +10,7 @@ export const Home = props => {
   const [colors, setColors] = useState([]);
   const [whatStarsAreGold, setWhatStarsAreGold] = useState({});
   const [display, setDisplay] = useState('equal');
+  const [lockedColors, setLockedColors] = useState([false, false, false]);
   
   useEffect(() => {
     async function getColors(){
@@ -39,19 +40,27 @@ export const Home = props => {
     navigator.clipboard.writeText(`rgb(${colors[colorIndex].r}, ${colors[colorIndex].b}, ${colors[colorIndex].g})`);
   }
 
+  const toggleLockColor = (colorIndex) => {
+    const newLockedColers = lockedColors;
+    newLockedColers[colorIndex] = !newLockedColers[colorIndex];
+    setLockedColors([...newLockedColers]);
+  }
+
   if(colors.length === 0)
     return null;
+
+  console.log(lockedColors);
   return (
     <div className='home-container'>
       <h1>Machine Learning Color Palette</h1>
       <div className='box-container'>
         {colors.map((color, idx) => {
-          return <div className={`box ${display}-box box${idx}`} style={{backgroundColor: `rgb(${color.r}, ${color.b}, ${color.g})`}}><button className='copy-button' onClick={() => copyToClipboard(idx)}>Copy rgb</button></div>
+          return <div key={idx} className={`box ${display}-box box${idx}`} style={{backgroundColor: `rgb(${color.r}, ${color.b}, ${color.g})`}}>
+              <button className='copy-button' onClick={() => copyToClipboard(idx)}>Copy rgb</button>
+              <button className='lock-button' onClick={() => toggleLockColor(idx)}>{lockedColors[idx] ? 'Locked' : 'Unlocked'}</button>
+            </div>
+            
         })}
-
-        {/* <div className={`box ${display}-box box1`} style={{backgroundColor: `rgb(${colors[0].r}, ${colors[0].b}, ${colors[0].g})`}}><button className='copy-button' onClick={() => copyToClipboard(0)}>Copy rgb</button></div>
-        <div className={`box ${display}-box box2`} style={{backgroundColor: `rgb(${colors[1].r}, ${colors[1].b}, ${colors[1].g})`}}><button className='copy-button' onClick={() => copyToClipboard(1)}>Copy rgb</button></div>
-        <div className={`box ${display}-box box3`} style={{backgroundColor: `rgb(${colors[2].r}, ${colors[2].b}, ${colors[2].g})`}}><button className='copy-button' onClick={() => copyToClipboard(2)}>Copy rgb</button></div> */}
       </div>
       <div className='stars-container'>
         <button className={`star ${whatStarsAreGold.star1 ? 'gold' : ''}`} id='star1' onMouseEnter={() => onMouseEnter(1)} onMouseLeave={onMouseLeave} onClick={() => postRating(0)}>★</button>
