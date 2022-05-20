@@ -20,8 +20,14 @@ export const Home = props => {
   },[])
 
   const postRating = async(rating) => {
-    
-    setColors((await axios.post('/api/colors', {rating, colors})).data.colors);
+    const newColors = (await axios.post('/api/colors', {rating, colors})).data.colors
+
+    lockedColors.forEach((lockedColor, idx) => {
+      if(lockedColor)
+        newColors[idx] = colors[idx];
+    })
+
+    setColors(newColors);
   }
 
   const onMouseEnter = (hoveredStar) => {
