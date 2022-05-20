@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import SamplePage from './SamplePage';
+import { GrLock, GrUnlock } from 'react-icons/gr';
+import { MdContentCopy } from 'react-icons/md'
 
 /**
  * COMPONENT
@@ -52,22 +54,38 @@ export const Home = props => {
     setLockedColors([...newLockedColers]);
   }
 
+  const toggleDisplay = () =>{
+    if(display === 'design')
+      setDisplay('equal')
+    else
+      setDisplay('design')
+  }
+
+  const reset = async () => {
+    await axios.delete('/api/colors');
+  }
+
   if(colors.length === 0)
     return null;
 
-  console.log(lockedColors);
   return (
     <div className='home-container'>
-      <h1>Machine Learning Color Palette</h1>
+      <h1>ColorAI</h1>
       <div className='box-container'>
         {colors.map((color, idx) => {
           return <div key={idx} className={`box ${display}-box box${idx}`} style={{backgroundColor: `rgb(${color.r}, ${color.b}, ${color.g})`}}>
-              <button className='copy-button' onClick={() => copyToClipboard(idx)}>Copy rgb</button>
-              <button className='lock-button' onClick={() => toggleLockColor(idx)}>{lockedColors[idx] ? 'Locked' : 'Unlocked'}</button>
+              <button className='copy-button' onClick={() => copyToClipboard(idx)}><MdContentCopy/></button>
+              <button className='lock-button' style={lockedColors[idx] ? {visibility:'visible'} : null} onClick={() => toggleLockColor(idx)}>{lockedColors[idx] ? <GrLock/> : <GrUnlock/>}</button>
             </div>
             
         })}
       </div>
+
+      <label className="switch">
+        <input type="checkbox"/>
+        <span className="slider round" onClick={toggleDisplay}></span>
+      </label>
+
       <div className='stars-container'>
         <button className={`star ${whatStarsAreGold.star1 ? 'gold' : ''}`} id='star1' onMouseEnter={() => onMouseEnter(1)} onMouseLeave={onMouseLeave} onClick={() => postRating(0)}>★</button>
         <button className={`star ${whatStarsAreGold.star2 ? 'gold' : ''}`}  id='star2' onMouseEnter={() => onMouseEnter(2)} onMouseLeave={onMouseLeave} onClick={() => postRating(1)}>★</button>
@@ -75,14 +93,12 @@ export const Home = props => {
         <button className={`star ${whatStarsAreGold.star4 ? 'gold' : ''}`}  id='star4' onMouseEnter={() => onMouseEnter(4)} onMouseLeave={onMouseLeave} onClick={() => postRating(3)}>★</button>
         <button className={`star ${whatStarsAreGold.star5 ? 'gold' : ''}`}  id='star5' onMouseEnter={() => onMouseEnter(5)} onMouseLeave={onMouseLeave} onClick={() => postRating(4)}>★</button>
       </div>
-      <h3>Display</h3>
-      <div className='display-options-container'>
-        
-        <button onClick={() => setDisplay('design')}>Design</button>
-        <button onClick={() => setDisplay('equal')}>Equal</button>
-      </div>
+
+      <button className='reset-button' onClick={reset}>Reset</button>
+
       <h3 className='sample-page-header'>Sample Page</h3>
       <SamplePage colors={colors}/>
+
     </div>
   )
 }
